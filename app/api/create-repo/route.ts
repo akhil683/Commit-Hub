@@ -11,7 +11,8 @@ export async function POST(req: Request) {
 
     // Create an instance of Octokit with the provided access token
     const octokit = new Octokit({
-      auth: accessToken,
+      // auth: accessToken,
+      auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
     });
 
     // Fetch the authenticated user's info
@@ -26,18 +27,21 @@ export async function POST(req: Request) {
       })
       .catch(() => null);
 
-    const { data: repos } = await octokit.repos.listForAuthenticatedUser();
-    console.log("repository", repos)
     if (existingRepo) {
       return NextResponse.json({ message: 'Repository already exists' }, { status: 400 });
     }
 
-    // Create new repository
+    // Create code-tracking repository
+    // Here commit will be done automatically when you push to any branch
+    // of any repo except main, so that commit wil count 
+    // to the green dots in github profile
     const createRepoResponse = await octokit.rest.repos.createForAuthenticatedUser({
       name: repoName,
-      private: true,
+      description: "Track the daily coding accurately in one repo",
       auto_init: true,
+      homepage: "https://localhost:3000"
     });
+    console.log(createRepoResponse.data)
 
     return NextResponse.json({ data: createRepoResponse.data }, { status: 200 });
   } catch (error: any) {
