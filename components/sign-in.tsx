@@ -1,6 +1,7 @@
-import { signIn } from "@/auth"
+import React from 'react'
+import { signIn } from '@/auth'
 
-export default function SignIn() {
+export const SignIn = () => {
   return (
     <form
       action={async () => {
@@ -8,7 +9,8 @@ export default function SignIn() {
         await signIn("github")
       }}
     >
-      <button type="submit">Signin with GitHub</button>
+      <button type='submit'>Signin with Github</button>
     </form>
   )
-} 
+}
+

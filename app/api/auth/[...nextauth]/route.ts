@@ -4,11 +4,11 @@ import GitHub from "next-auth/providers/github";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID || "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+      clientId: process.env.AUTH_GITHUB_ID as string || "",
+      clientSecret: process.env.AUTH_GITHUB_SECRET as string || "",
       authorization: {
         params: {
-          scope: 'repo user public_repo'
+          scope: 'repo user'
         }
       }
     })
@@ -23,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       //Add session token to the session object
-      session.accessToken = token?.accessToken as string || "akhil";
+      session.accessToken = token?.accessToken as string;
       console.log(session)
       return session;
     },

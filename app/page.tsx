@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import CreateRepo from "@/components/create-repo";
-import SignIn from "@/components/sign-in";
+import { SignIn } from "@/components/sign-in";
 import Image from "next/image";
 
 export default async function Home() {
