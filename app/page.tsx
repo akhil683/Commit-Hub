@@ -1,33 +1,20 @@
-import { auth } from "@/auth";
-import CreateRepo from "@/components/create-repo";
-import { SignIn } from "@/components/sign-in";
-import Image from "next/image";
+import Header from '@/components/Header'
+import Hero from '@/components/Hero'
+import Features from '@/components/Features'
+import HowItWorks from '@/components/HowItWorks'
+import CTA from '@/components/CTA'
 
-export default async function Home() {
-  const session = await auth()
-
+export default function Home() {
   return (
-    <section>
-      <SignIn />
-      {session && (
-        <>
-          <p>
-            {session?.user?.name}
-          </p>
-          <p>
-            {session?.user?.email}
-          </p>
-          <Image
-            src={session?.user?.image!}
-            width={200}
-            height={200}
-            alt="Helllo"
-            priority
-          />
-        </>
-      )}
-      <CreateRepo />
-    </section>
-  );
-
+    <div className="min-h-screen bg-black text-white">
+      <Header />
+      <main>
+        <Hero />
+        <Features />
+        <HowItWorks />
+        <CTA />
+      </main>
+    </div>
+  )
 }
+
