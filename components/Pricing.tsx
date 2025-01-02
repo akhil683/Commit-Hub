@@ -24,7 +24,7 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section className="py-16 relative">
+    <section className="py-16 relative mt-32">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/10 to-black opacity-50" />
       <div className="container mx-auto px-4 relative z-10">
         <motion.h2

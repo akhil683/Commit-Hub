@@ -34,21 +34,21 @@ export default function HowItWorks() {
   ]
 
   const { data: session } = useSession()
-  const createWebhookHandler = async () => {
-    if (!session) return;
-    try {
-      const response = await axios.post("/api/create-webhook", {
-        accessToken: (session as SessionData).accessToken,
-      })
-      console.log("webhook response", response)
-    } catch (error) {
-      console.log("Error creating webhook", error)
-    }
-  }
+
+  // const createWebhookHandler = async () => {
+  //   if (!session) return;
+  //   try {
+  //     const response = await axios.post("/api/create-webhook", {
+  //       accessToken: (session as SessionData).accessToken,
+  //     })
+  //     console.log("webhook response", response)
+  //   } catch (error) {
+  //     console.log("Error creating webhook", error)
+  //   }
+  // }
 
   return (
-    <section className="py-16 bg-black bg-opacity-30">
-      <button onClick={createWebhookHandler}>Create webhook</button>
+    <section className="py-16 bg-black bg-opacity-30 mt-32">
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

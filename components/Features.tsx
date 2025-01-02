@@ -24,7 +24,7 @@ export default function Features() {
   ]
 
   return (
-    <section className="py-16 relative mt-32">
+    <section className="py-16 relative">
       <SpaceBackground />
       <div className="container mx-auto px-4 relative z-10">
         <motion.h2

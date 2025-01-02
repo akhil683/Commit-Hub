@@ -23,19 +23,19 @@ const Star = ({ size, top, left, delay }: { size: number; top: string; left: str
 )
 
 export const SpaceBackground = () => {
-  const stars = Array.from({ length: 50 }).map((_, i) => ({
-    size: Math.random() * 2 + 1,
-    top: `${Math.random() * 100}%`,
-    left: `${Math.random() * 100}%`,
-    delay: Math.random() * 5,
-  }))
+  // const stars = Array.from({ length: 50 }).map((_, i) => ({
+  //   size: Math.random() * 2 + 1,
+  //   top: `${Math.random() * 100}%`,
+  //   left: `${Math.random() * 100}%`,
+  //   delay: Math.random() * 5,
+  // }))
 
   return (
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-primary to-black opacity-20" />
-      {stars.map((star, index) => (
-        <Star key={index} {...star} />
-      ))}
+      {/* {stars.map((star, index) => ( */}
+      {/*   <Star key={index} {...star} /> */}
+      {/* ))} */}
       <motion.div
         className="absolute inset-0 bg-repeat opacity-5"
         initial={{ backgroundPosition: '0% 0%' }}
