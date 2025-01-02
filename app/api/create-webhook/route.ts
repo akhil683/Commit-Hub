@@ -7,7 +7,6 @@
 
 import { Octokit } from "@octokit/rest";
 import { NextRequest, NextResponse } from "next/server";
-import CryptoJS from "crypto-js";
 
 interface CreateWebhookRequestBody {
   accessToken: string;
@@ -18,11 +17,6 @@ export async function POST(req: NextRequest) {
   // console.log(body.accessToken)
   const webhookBaseURL = "https://7727-2409-40d7-100b-8dce-d44c-14c7-82d1-385b.ngrok-free.app/api/handle-webhook"
   const accessToken = body.accessToken
-  //Encrypt the accessToken  using AES
-  const encryptedToken = CryptoJS.AES.encrypt(accessToken, process.env.ENCRYPT_KEY!).toString()
-  // console.log(encryptedToken)
-  const webhookURL = `${webhookBaseURL}?token=${accessToken}`
-  console.log("final webhook URL", webhookURL)
 
   try {
     const octokit = new Octokit({
@@ -42,7 +36,7 @@ export async function POST(req: NextRequest) {
           repo: repo.name
         })
         const existingHook = hooks.find((hook) =>
-          hook.config.url === webhookURL
+          hook.config.url === webhookBaseURL
         )
         if (existingHook) {
           results.push({
@@ -59,7 +53,7 @@ export async function POST(req: NextRequest) {
           owner: user,
           repo: repo.name,
           config: {
-            url: webhookURL,
+            url: webhookBaseURL,
             content_type: "json",
           },
           events: ["push"],
