@@ -6,8 +6,8 @@
 // webhooks won't be created, and commits won't be tracked.
 
 import { Octokit } from "@octokit/rest";
-import { startTurbopackTraceServer } from "next/dist/build/swc/generated-native";
 import { NextRequest, NextResponse } from "next/server";
+import CryptoJS from "crypto-js";
 
 interface CreateWebhookRequestBody {
   accessToken: string;
@@ -16,6 +16,10 @@ interface CreateWebhookRequestBody {
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
   console.log(body.accessToken)
+
+  //Encrypt the accessToken  using AES
+  const encryptedToken = CryptoJS.AES.encrypt(body.accessToken, process.env.ENCRYPT_KEY!).toString()
+  console.log(encryptedToken)
 
   try {
     const octokit = new Octokit({
@@ -40,7 +44,11 @@ export async function POST(req: NextRequest) {
           hook.config.url === webhookURL
         )
         if (existingHook) {
-          results.push({ repo: repo.name, status: "Webhook already exists" })
+          results.push({
+            repo: repo.name,
+            status: "Webhook already exists",
+            hook_id: existingHook.id
+          })
           continue
         }
 
@@ -49,25 +57,25 @@ export async function POST(req: NextRequest) {
           owner: user,
           repo: repo.name,
           config: {
-            url: webhookURL,
+            url: `${webhookURL}?token=${encryptedToken}`,
             content_type: "json",
           },
           events: ["push"],
         });
-        const hookId = createdHook.id
 
         //Pass the accessToken with webhook payload
-        await octokit.repos.pingWebhook({
-          owner: user,
-          repo: repo.name,
-          hook_id: hookId,
-          payload: {
-            accessToken: body.accessToken
-          }
-        })
+        // await octokit.repos.pingWebhook({
+        //   owner: user,
+        //   repo: repo.name,
+        //   hook_id: hookId,
+        //   payload: {
+        //     accessToken: body.accessToken
+        //   }
+        // })
         results.push({
           repo: repo.name,
-          status: 'Webhook created successfullly'
+          status: 'Webhook created successfullly',
+          hook_id: createdHook.id
         })
       } catch (repoError: any) {
         console.error(`Error creating webhook for repo ${repo.name}:`)
