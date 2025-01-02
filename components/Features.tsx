@@ -4,25 +4,25 @@ import { motion } from 'framer-motion'
 import { Code, GitBranch, GitCommit } from 'lucide-react'
 import { SpaceBackground } from './SpaceBackground'
 
-const features = [
-  {
-    icon: <Code className="h-16 w-16 text-violet-400" />,
-    title: 'Automatic Tracking',
-    description: 'Effortlessly track all your coding activity across repositories.',
-  },
-  {
-    icon: <GitBranch className="h-16 w-16 text-pink-400" />,
-    title: 'Branch Agnostic',
-    description: 'Capture commits from all branches, not just main.',
-  },
-  {
-    icon: <GitCommit className="h-16 w-16 text-cyan-400" />,
-    title: 'Enhanced Profile',
-    description: 'Showcase your true coding activity on your GitHub profile.',
-  },
-]
-
 export default function Features() {
+  const features = [
+    {
+      icon: <Code className="h-16 w-16 text-violet-400" />,
+      title: 'Automatic Tracking',
+      description: 'Effortlessly track all your coding activity across repositories.',
+    },
+    {
+      icon: <GitBranch className="h-16 w-16 text-pink-400" />,
+      title: 'Branch Agnostic',
+      description: 'Capture commits from all branches, not just main.',
+    },
+    {
+      icon: <GitCommit className="h-16 w-16 text-cyan-400" />,
+      title: 'Enhanced Profile',
+      description: 'Showcase your true coding activity on your GitHub profile.',
+    },
+  ]
+
   return (
     <section className="py-16 relative mt-32">
       <SpaceBackground />
@@ -31,7 +31,7 @@ export default function Features() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl md:text-6xl font-bold text-center mb-16"
+          className="text-4xl md:text-6xl font-bold text-center mb-16"
         >
           Features
         </motion.h2>
@@ -45,7 +45,7 @@ export default function Features() {
               className="flex flex-col justify-center items-center bg-gray-900 bg-opacity-30 p-6 rounded-lg shadow-lg backdrop-blur-sm border border-gray-700 py-16"
             >
               <div className="mb-8">{feature.icon}</div>
-              <h3 className="text-3xl font-semibold mb-4">{feature.title}</h3>
+              <h3 className="text-2xl md:text-3xl font-semibold mb-4">{feature.title}</h3>
               <p className="text-gray-300 max-w-72 text-center">{feature.description}</p>
             </motion.div>
           ))}

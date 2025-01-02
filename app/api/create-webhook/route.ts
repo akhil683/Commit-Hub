@@ -6,6 +6,7 @@
 // webhooks won't be created, and commits won't be tracked.
 
 import { Octokit } from "@octokit/rest";
+import { startTurbopackTraceServer } from "next/dist/build/swc/generated-native";
 import { NextRequest, NextResponse } from "next/server";
 
 interface CreateWebhookRequestBody {
@@ -14,31 +15,73 @@ interface CreateWebhookRequestBody {
 
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
+  console.log(body.accessToken)
 
   try {
     const octokit = new Octokit({
-      // auth: body.accessToken 
-      auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
+      auth: body.accessToken
+      // auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
     });
+    const results = []
 
     // Fetch all user repositories
     const { data: repos } = await octokit.repos.listForAuthenticatedUser();
+    const user = (await octokit.users.getAuthenticated()).data.login
+    const webhookURL = "https://7727-2409-40d7-100b-8dce-d44c-14c7-82d1-385b.ngrok-free.app/api/handle-webhook"
 
     for (const repo of repos) {
-      await octokit.repos.createWebhook({
-        owner: (await octokit.users.getAuthenticated()).data.login,
-        repo: repo.name,
-        config: {
-          url: "https://d34d-2409-40d7-100b-4f00-ec60-1d29-56a3-7be0.ngrok-free.app/api/handle-webhook",
-          content_type: "json",
-        },
-        events: ["push"],
-      });
+      try {
+        //Check if the webhook already exists
+        const { data: hooks } = await octokit.repos.listWebhooks({
+          owner: user,
+          repo: repo.name
+        })
+        const existingHook = hooks.find((hook) =>
+          hook.config.url === webhookURL
+        )
+        if (existingHook) {
+          results.push({ repo: repo.name, status: "Webhook already exists" })
+          continue
+        }
+
+        // Create new webhook
+        const { data: createdHook } = await octokit.repos.createWebhook({
+          owner: user,
+          repo: repo.name,
+          config: {
+            url: webhookURL,
+            content_type: "json",
+          },
+          events: ["push"],
+        });
+        const hookId = createdHook.id
+
+        //Pass the accessToken with webhook payload
+        await octokit.repos.pingWebhook({
+          owner: user,
+          repo: repo.name,
+          hook_id: hookId,
+          payload: {
+            accessToken: body.accessToken
+          }
+        })
+        results.push({
+          repo: repo.name,
+          status: 'Webhook created successfullly'
+        })
+      } catch (repoError: any) {
+        console.error(`Error creating webhook for repo ${repo.name}:`)
+        results.push({ repo: repo.name, status: `Error: ${repoError.message}` })
+      }
     }
 
-    return NextResponse.json({ message: "Webhooks created successfully" });
+    return NextResponse.json({
+      message: "Webhooks created successfully",
+      results
+    });
+
   } catch (error: any) {
-    console.error(error);
+    console.error("Error creating webhook: ", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

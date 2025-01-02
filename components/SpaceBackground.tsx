@@ -37,7 +37,7 @@ export const SpaceBackground = () => {
         <Star key={index} {...star} />
       ))}
       <motion.div
-        className="absolute inset-0 bg-[url('/github-logo.svg')] bg-repeat opacity-5"
+        className="absolute inset-0 bg-repeat opacity-5"
         initial={{ backgroundPosition: '0% 0%' }}
         animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
         transition={{ duration: 200, repeat: Infinity, ease: 'linear' }}

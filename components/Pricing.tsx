@@ -46,15 +46,15 @@ export default function Pricing() {
             >
               <h3 className="text-2xl font-semibold">{plan.name}</h3>
               <div className='h-[1px] bg-gray-700 my-4' />
-              <div className="text-5xl text-center font-bold mb-8 bg-gradient-to-b from-indigo-300 to-white text-transparent bg-clip-text">
+              <div className="text-4xl md:text-5xl text-center font-bold mb-8 bg-gradient-to-b from-indigo-300 to-white text-transparent bg-clip-text">
                 {plan.price} /month
               </div>
               {plan.name === "Pro" ? (
-                <button className='py-3 w-full bg-gradient-to-tr from-violet-700 via-indigo-700 to-purple-700 rounded-xl text-white text-lg font-semibold hover:bg-blue-600 duration-500'>
+                <button className='py-3 w-full bg-gradient-to-tr from-violet-700 via-indigo-700 to-purple-700 rounded-xl text-white md:text-lg font-semibold hover:bg-blue-600 duration-500'>
                   Choose {plan.name}
                 </button>
               ) : (
-                <button className='py-3 w-full bg-blue-700 rounded-xl text-white text-lg font-semibold hover:bg-blue-900 duration-300'>
+                <button className='py-3 w-full bg-blue-700 rounded-xl text-white md:text-lg font-semibold hover:bg-blue-900 duration-300'>
                   Choose {plan.name}
                 </button>
               )}

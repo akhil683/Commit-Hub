@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 export default function CTA() {
   return (
     <section className="py-16 bg-gradient-to-r from-purple-900/60 via-indigo-800/60 to-purple-900/60">
-      <div className="container mx-auto px-4 text-center">
+      <div className="container mx-auto px-12 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -28,7 +28,7 @@ export default function CTA() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <Button size="lg" className="bg-white text-violet-900 hover:bg-gray-200">
+          <Button size="lg" className="bg-white text-indigo-900 hover:bg-gray-200">
             Get Started Now
           </Button>
         </motion.div>

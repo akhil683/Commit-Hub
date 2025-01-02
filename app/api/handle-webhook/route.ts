@@ -6,11 +6,13 @@ export async function POST(req: NextRequest) {
 
   if (event.ref !== "refs/heads/main") {
     const repoName = "code-tracking";
-    const userRepoName = event.repository.name;
-    const commitMessage = event.head_commit.message;
+    const userRepoName = event?.repository?.name;
+    const commitMessage = event?.head_commit?.message;
 
     try {
-      const octokit = new Octokit({ auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN });
+      const octokit = new Octokit({
+        auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN
+      });
 
       // Push commit to code-tracking repo
       await octokit.repos.createOrUpdateFileContents({

@@ -10,8 +10,8 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white">
       <Header />
       <main>
-        <Hero />
-        <Features />
+        {/* <Hero /> */}
+        {/* <Features /> */}
         <HowItWorks />
         <Pricing />
         <CTA />
