@@ -14,7 +14,7 @@ interface CreateWebhookRequestBody {
 
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
-  // console.log(body.accessToken)
+  console.log(body.accessToken)
   const webhookBaseURL = "https://7727-2409-40d7-100b-8dce-d44c-14c7-82d1-385b.ngrok-free.app/api/handle-webhook"
   const accessToken = body.accessToken
 
