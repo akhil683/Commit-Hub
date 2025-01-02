@@ -13,7 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET || "",
+  secret: process.env.AUTH_SECRET || "",
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
