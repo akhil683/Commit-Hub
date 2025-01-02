@@ -3,9 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(req: NextRequest) {
+
   console.log("hello handle webhook")
   const event = await req.json();
+
   const { searchParams } = new URL(req.url)
+  console.log(searchParams)
+
   const encryptedToken = searchParams.get('token')
   console.log("accessToken", encryptedToken)
 
@@ -31,8 +35,8 @@ export async function POST(req: NextRequest) {
 
     try {
       const octokit = new Octokit({
-        auth: encryptedToken
-        // auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN
+        // auth: encryptedToken
+        auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN
       });
 
       // Push commit to code-tracking repo
