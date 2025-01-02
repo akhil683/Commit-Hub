@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const commitMessage = event?.head_commit?.message;
     const branchName = event?.ref?.split("/")[2] // refs/heads/main
     const user = event?.repository?.owner?.login
-    const newCommitMessage = `[${repoName}][${userRepoName}] -> ${commitMessage}`
+    const newCommitMessage = `[${userRepoName}][${branchName}] -> ${commitMessage}`
     console.log(
       repoName,
       userRepoName,
