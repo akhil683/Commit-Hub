@@ -7,8 +7,8 @@ import Pricing from '@/components/Pricing'
 export default function Home() {
   return (
     <main className='min-h-screen bg-black text-white'>
-      {/* <Hero /> */}
-      {/* <Features /> */}
+      <Hero />
+      <Features />
       <HowItWorks />
       <Pricing />
       <CTA />

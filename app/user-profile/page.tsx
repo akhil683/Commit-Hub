@@ -29,7 +29,7 @@ export default function UserProfile() {
           <div className="flex max-md:flex-col gap-8 md:gap-16">
             <div className='flex md:flex-col gap-8 max-md:items-center'>
               <Avatar className="md:h-56 md:w-56 sm:h-44 sm:w-44 h-20 w-20">
-                <AvatarImage src="/placeholder.svg" alt="User" />
+                <AvatarImage src="/" alt="User" />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
               <div className='md:mt-4 md:space-y-2'>
