@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       });
 
       //check if the file already exists in the target repository
-      const filePath = `repo/${userRepoName}.txt`
+      const filePath = `${userRepoName}.txt`
       let fileContent = ""
       let sha = ""
 
