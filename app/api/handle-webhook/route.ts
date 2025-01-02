@@ -3,10 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function POST(req: NextRequest) {
+  console.log("hello handle webhook")
   const event = await req.json();
   const { searchParams } = new URL(req.url)
   const encryptedToken = searchParams.get('token')
-  console.log(encryptedToken)
+  console.log("accessToken", encryptedToken)
 
   //Check if there is a accessToken in request
   if (!encryptedToken) {

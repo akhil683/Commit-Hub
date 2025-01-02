@@ -16,14 +16,14 @@ interface CreateWebhookRequestBody {
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
   console.log(body.accessToken)
-
+  const accessToken = body.accessToken
   //Encrypt the accessToken  using AES
-  const encryptedToken = CryptoJS.AES.encrypt(body.accessToken, process.env.ENCRYPT_KEY!).toString()
+  const encryptedToken = CryptoJS.AES.encrypt(accessToken, process.env.ENCRYPT_KEY!).toString()
   console.log(encryptedToken)
 
   try {
     const octokit = new Octokit({
-      auth: body.accessToken
+      auth: accessToken
       // auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
     });
     const results = []
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
           owner: user,
           repo: repo.name,
           config: {
-            url: `${webhookURL}?token=${body.accessToken}`,
+            url: `${webhookURL}?token=${accessToken}`,
             content_type: "json",
           },
           events: ["push"],
