@@ -15,23 +15,24 @@ interface CreateWebhookRequestBody {
 
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
-  console.log(body.accessToken)
+  // console.log(body.accessToken)
+  const webhookBaseURL = "https://7727-2409-40d7-100b-8dce-d44c-14c7-82d1-385b.ngrok-free.app/api/handle-webhook"
   const accessToken = body.accessToken
   //Encrypt the accessToken  using AES
   const encryptedToken = CryptoJS.AES.encrypt(accessToken, process.env.ENCRYPT_KEY!).toString()
-  console.log(encryptedToken)
+  // console.log(encryptedToken)
+  const webhookURL = `${webhookBaseURL}?token=${accessToken}`
+  console.log("final webhook URL", webhookURL)
 
   try {
     const octokit = new Octokit({
       auth: accessToken
-      // auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
     });
     const results = []
 
     // Fetch all user repositories
     const { data: repos } = await octokit.repos.listForAuthenticatedUser();
     const user = (await octokit.users.getAuthenticated()).data.login
-    const webhookURL = "https://7727-2409-40d7-100b-8dce-d44c-14c7-82d1-385b.ngrok-free.app/api/handle-webhook"
 
     for (const repo of repos) {
       try {
@@ -53,11 +54,12 @@ export async function POST(req: NextRequest) {
         }
 
         // Create new webhook
+        console.log()
         const { data: createdHook } = await octokit.repos.createWebhook({
           owner: user,
           repo: repo.name,
           config: {
-            url: `${webhookURL}?token=${accessToken}`,
+            url: webhookURL,
             content_type: "json",
           },
           events: ["push"],
