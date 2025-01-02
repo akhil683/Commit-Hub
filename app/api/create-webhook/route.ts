@@ -57,21 +57,12 @@ export async function POST(req: NextRequest) {
           owner: user,
           repo: repo.name,
           config: {
-            url: `${webhookURL}?token=${encryptedToken}`,
+            url: `${webhookURL}?token=${body.accessToken}`,
             content_type: "json",
           },
           events: ["push"],
         });
 
-        //Pass the accessToken with webhook payload
-        // await octokit.repos.pingWebhook({
-        //   owner: user,
-        //   repo: repo.name,
-        //   hook_id: hookId,
-        //   payload: {
-        //     accessToken: body.accessToken
-        //   }
-        // })
         results.push({
           repo: repo.name,
           status: 'Webhook created successfullly',

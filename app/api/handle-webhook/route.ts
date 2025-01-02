@@ -17,9 +17,9 @@ export async function POST(req: NextRequest) {
   }
 
   //Decrypt the token using AES
-  const bytes = CryptoJS.AES.decrypt(encryptedToken, process.env.ENCRYPT_KEY!)
-  const accessToken = bytes.toString(CryptoJS.enc.Utf8)
-  console.log(accessToken)
+  // const bytes = CryptoJS.AES.decrypt(encryptedToken, process.env.ENCRYPT_KEY!)
+  // const accessToken = bytes.toString(CryptoJS.enc.Utf8)
+  // console.log(accessToken)
 
   // Check if commit is in main branch or not
   if (event.ref !== "refs/heads/main") {
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     try {
       const octokit = new Octokit({
-        auth: accessToken
+        auth: encryptedToken
         // auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN
       });
 
