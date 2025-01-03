@@ -1,5 +1,7 @@
 # Code Tracking App
 
+![Landing Page](./assets/readme.png)
+
 A web application that helps developers keep their GitHub contribution graph updated, even for work done on branches other than `main`. The app automatically tracks commits from all repositories and mirrors them to a dedicated `code-tracking` repository. This ensures that every commit contributes to the user's contribution graph ("green dots") on GitHub.
 
 ---
