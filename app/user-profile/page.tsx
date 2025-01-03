@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { SpaceBackground } from '@/components/SpaceBackground'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -8,16 +8,13 @@ import { GitCommit, Github, Star, DollarSign } from 'lucide-react'
 import Guide from './Guide'
 
 export default function UserProfile() {
-  const { data: session, status } = useSession()
-  const router = useRouter()
+  const { data: session } = useSession()
 
-
-  if (status === 'loading') return <p>Loading...</p>
+  // TODO: Get user account for accessing github accessToken
+  console.log(session)
   if (!session) {
-    router.push("/")
-    return null
+    redirect("/")
   }
-
 
   return (
     <div className="min-h-screen relative text-white">
@@ -31,8 +28,8 @@ export default function UserProfile() {
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
               <div className='md:mt-2 md:space-y-2'>
-                <div className="text-2xl font-semibold md:text-3xl">{session.user?.name}</div>
-                <div className='max-sm:text-sm text-gray-400'>{session.user?.name}</div>
+                <div className="text-2xl font-semibold md:text-3xl">{session?.user?.name}</div>
+                <div className='max-sm:text-sm text-gray-400'>{session?.user?.name}</div>
               </div>
             </div>
             <span className='md:hidden text-gray-300 text-sm'>Acting Productive with Neovim, but I'm not</span>

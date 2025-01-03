@@ -46,6 +46,7 @@ export default function Hero() {
             </Button>
           ) : (
             <Button onClick={() => signIn("github", { callbackUrl: '/user-profile' })} size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              Get Started
             </Button>
           )}
         </motion.div>
