@@ -16,7 +16,7 @@ export const SignIn = () => {
             <LogOut className='md:mr-2 mr-1 h-4 w-4' />
           </Button >
         ) : (
-          <Button onClick={() => signIn("github")} className="bg-primary hover:bg-indigo-700 text-white">
+          <Button onClick={() => signIn("github", { callbackUrl: '/user-profile' })} className="bg-primary hover:bg-indigo-700 text-white">
             <Github className="md:mr-2 mr-1 h-4 w-4" /> Sign In
             <span className='max-md:hidden'>with GitHub</span>
           </Button >

@@ -15,7 +15,7 @@ interface CreateWebhookRequestBody {
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
   console.log(body.accessToken)
-  const webhookBaseURL = "https://7727-2409-40d7-100b-8dce-d44c-14c7-82d1-385b.ngrok-free.app/api/handle-webhook"
+  const webhookBaseURL = " https://f8f1-2409-40d7-e-ae97-5188-b329-f9a-63c8.ngrok-free.app/api/handle-webhook"
   const accessToken = body.accessToken
 
   try {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         //Check if the webhook already exists
         const { data: hooks } = await octokit.repos.listWebhooks({
           owner: user,
-          repo: repo.name
+          repo: repo.name,
         })
         const existingHook = hooks.find((hook) =>
           hook.config.url === webhookBaseURL

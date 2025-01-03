@@ -48,7 +48,7 @@ export default function HowItWorks() {
   // }
 
   return (
-    <section className="py-16 bg-black bg-opacity-30 mt-32">
+    <section className="py-16 bg-black bg-opacity-30 mt-20 md:mt-32">
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

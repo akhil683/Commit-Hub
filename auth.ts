@@ -13,6 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     })
   ],
+  secret: process.env.AUTH_SECRET || "",
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -23,6 +24,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       session.accessToken = token.accessToken as string
       return session
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) {
+        return url
+      }
+      return `${baseUrl}/user-profile`
     }
   }
 })
