@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 
 export default function CTA() {
   return (
-    <section className="py-16 bg-gradient-to-r from-purple-900/60 via-indigo-800/60 to-purple-900/60">
+    <section className="py-16 bg-gradient-to-r from-blue-900/40 via-indigo-800/60 to-purple-900/40">
       <div className="container mx-auto px-12 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
