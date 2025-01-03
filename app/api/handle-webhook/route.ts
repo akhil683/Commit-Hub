@@ -8,10 +8,30 @@ interface FileDataType {
 
 
 export async function POST(req: NextRequest) {
+  const action = req.headers.get("x-github-event")
+  console.log(action)
+
+  //ignore ping event  triggered by github to test webhook
+  if (action === "ping") {
+    console.log("Received ping event. Ignoring")
+    return NextResponse.json({ message: "Unsupported event" }, { status: 200 })
+  }
+  //Ignor events which are not push events
+  if (action !== "push") {
+    console.log(`Received unsupported event: ${action}. Ignoring.`);
+    return NextResponse.json({ message: "Unsupported event" }, { status: 200 });
+  }
 
   const event = await req.json();
+  console.log(event)
 
-  // Check if commit is in main branch or not
+  //Validate the event payload
+  if (!event || !event.ref || !event.repository || !event.head_commit) {
+    return NextResponse.json({ error: "Invalid event payload" }, { status: 400 });
+  }
+
+
+  // Process non-main branch commits
   if (event.ref !== "refs/heads/main") {
     const repoName = "codetracking";
     const userRepoName = event?.repository?.name;
@@ -48,7 +68,7 @@ export async function POST(req: NextRequest) {
           path: filePath,
         })
         const fileData = data as FileDataType
-        fileContent = Buffer.from(fileData.content, 'base64').toString()
+        fileContent = fileData.content ? Buffer.from(fileData.content, 'base64').toString() : ""
         sha = fileData.sha
 
       } catch (fileError: any) {
@@ -56,6 +76,7 @@ export async function POST(req: NextRequest) {
           fileContent = ""
         } else {
           console.log(fileError)
+          return NextResponse.json({ error: "Error fetching files" }, { status: 500 })
         }
       }
 
@@ -66,7 +87,7 @@ export async function POST(req: NextRequest) {
         path: filePath,
         message: newCommitMessage,
         content: Buffer.from(fileContent + "\n" + newCommitMessage).toString("base64"),
-        sha
+        sha: sha || undefined
       });
 
       return NextResponse.json({ message: "Webhook handled successfully" });
