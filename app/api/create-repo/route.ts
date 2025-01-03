@@ -39,7 +39,8 @@ export async function POST(req: Request) {
       name: repoName,
       description: "Track the daily coding accurately in one repo",
       auto_init: true,
-      homepage: "https://localhost:3000"
+      homepage: "https://auto-commit-hub.vercel.app",
+      private: true,
     });
     console.log(createRepoResponse.data)
 

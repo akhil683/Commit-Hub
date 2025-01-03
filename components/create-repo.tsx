@@ -15,19 +15,6 @@ interface SessionData {
 export default function CreateRepo() {
   const { data: session } = useSession();
 
-  const createRepo = async () => {
-    console.log(session, session?.accessToken)
-    if (!session) return;
-
-    try {
-      const response = await axios.post("/api/create-repo", {
-        accessToken: (session as SessionData).accessToken,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error creating repository:", error);
-    }
-  };
 
   const createWebhook = async () => {
     if (!session) return;
