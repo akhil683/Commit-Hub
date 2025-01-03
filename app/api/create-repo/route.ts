@@ -12,7 +12,6 @@ export async function POST(req: Request) {
     // Create an instance of Octokit with the provided access token
     const octokit = new Octokit({
       auth: accessToken,
-      // auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
     });
 
     // Fetch the authenticated user's info

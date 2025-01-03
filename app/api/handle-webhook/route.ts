@@ -1,3 +1,4 @@
+import { GITHUB_PERSONAL_ACCESS_TOKEN } from "@/config/env";
 import { Octokit } from "@octokit/rest";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
     try {
       const octokit = new Octokit({
         // auth: encryptedToken
-        auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN || ""
+        auth: GITHUB_PERSONAL_ACCESS_TOKEN
       });
 
       //check if the file already exists in the target repository

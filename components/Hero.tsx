@@ -3,8 +3,11 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { SpaceBackground } from './SpaceBackground'
+import Link from 'next/link'
+import { signIn, useSession } from 'next-auth/react'
 
 export default function Hero() {
+  const { data: session } = useSession()
   return (
     <section className="relative h-screen flex items-center">
       <SpaceBackground />
@@ -34,9 +37,17 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="flex justify-center"
         >
-          <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white">
-            Get Started
-          </Button>
+          {session ? (
+
+            <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              <Link href={"/user-profile"}>
+                Dashboard
+              </Link>
+            </Button>
+          ) : (
+            <Button onClick={() => signIn("github", { callbackUrl: '/user-profile' })} size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white">
+            </Button>
+          )}
         </motion.div>
       </div>
     </section>

@@ -5,6 +5,7 @@
 // into the code-tracking repo. Without calling this route, 
 // webhooks won't be created, and commits won't be tracked.
 
+import { WEBHOOK_URL } from "@/config/env";
 import { Octokit } from "@octokit/rest";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,7 +16,7 @@ interface CreateWebhookRequestBody {
 export async function POST(req: NextRequest) {
   const body: CreateWebhookRequestBody = await req.json();
   console.log(body.accessToken)
-  const webhookBaseURL = " https://f8f1-2409-40d7-e-ae97-5188-b329-f9a-63c8.ngrok-free.app/api/handle-webhook"
+  const webhookBaseURL = WEBHOOK_URL
   const accessToken = body.accessToken
 
   try {
