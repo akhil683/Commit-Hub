@@ -27,12 +27,12 @@ export default function UserProfile() {
           <div className="flex max-md:flex-col gap-8 md:gap-16">
             <div className='flex md:flex-col gap-8 max-md:items-center'>
               <Avatar className="md:h-48 md:w-48 sm:h-44 sm:w-44 h-20 w-20">
-                <AvatarImage src="/" alt="User" />
+                <AvatarImage src={session?.user?.image!} alt="User" />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
               <div className='md:mt-2 md:space-y-2'>
-                <div className="text-2xl font-semibold md:text-3xl">Akhil Palsra</div>
-                <div className='max-sm:text-sm text-gray-400'>akhil683</div>
+                <div className="text-2xl font-semibold md:text-3xl">{session.user?.name}</div>
+                <div className='max-sm:text-sm text-gray-400'>{session.user?.name}</div>
               </div>
             </div>
             <span className='md:hidden text-gray-300 text-sm'>Acting Productive with Neovim, but I'm not</span>

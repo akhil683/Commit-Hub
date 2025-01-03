@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   // Check if commit is in main branch or not
   if (event.ref !== "refs/heads/main") {
-    const repoName = "code-tracking";
+    const repoName = "codetracking";
     const userRepoName = event?.repository?.name;
     const commitMessage = event?.head_commit?.message;
     const branchName = event?.ref?.split("/")[2] // refs/heads/main
