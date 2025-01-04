@@ -10,6 +10,7 @@ import { Octokit } from "@octokit/rest";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
+
   try {
     // Retrieve the session to access the accessToken
     const session = await req.json()
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest) {
         });
 
         const existingHook = hooks.find((hook) => hook.config.url === webhookBaseURL);
-
+        
         if (existingHook) {
           console.log(`Webhook already exists for repo: ${repo.name}`);
           results.push({
