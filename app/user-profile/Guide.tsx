@@ -1,18 +1,12 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import axios from 'axios';
 import { Github } from 'lucide-react'
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
+import { SessionData } from '@/types';
 
-interface SessionData {
-  user: {
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
-  accessToken: string;
-}
 const Guide = () => {
   const [githubToken, setGithubToken] = useState('')
   const { data: session } = useSession()

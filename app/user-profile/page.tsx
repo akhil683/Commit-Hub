@@ -1,23 +1,16 @@
-'use client'
-
 import { redirect } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { SpaceBackground } from '@/components/SpaceBackground'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { GitCommit, Github, Star, DollarSign } from 'lucide-react'
 import Guide from './Guide'
-import { useEffect } from 'react'
+import { auth } from '@/auth'
 
-export default function UserProfile() {
-  const { data: session } = useSession()
+export default async function UserProfile() {
+  const session = await auth()
 
-  // TODO: Get user account for accessing github accessToken
-  useEffect(() => {
-    console.log(session)
-    if (!session) {
-      redirect("/")
-    }
-  }, [])
+  if (!session?.user) {
+    redirect("/")
+  }
 
   return (
     <div className="min-h-screen relative text-white">

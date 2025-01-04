@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Octokit } from '@octokit/rest';
+import { GITHUB_PERSONAL_ACCESS_TOKEN } from '@/config/env';
 
 export async function POST(req: Request) {
   const { accessToken } = await req.json();
@@ -11,7 +12,8 @@ export async function POST(req: Request) {
 
     // Create an instance of Octokit with the provided access token
     const octokit = new Octokit({
-      auth: accessToken,
+      // auth: accessToken,
+      auth: GITHUB_PERSONAL_ACCESS_TOKEN
     });
 
     // Fetch the authenticated user's info
