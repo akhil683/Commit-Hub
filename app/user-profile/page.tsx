@@ -6,15 +6,18 @@ import { SpaceBackground } from '@/components/SpaceBackground'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { GitCommit, Github, Star, DollarSign } from 'lucide-react'
 import Guide from './Guide'
+import { useEffect } from 'react'
 
 export default function UserProfile() {
   const { data: session } = useSession()
 
   // TODO: Get user account for accessing github accessToken
-  console.log(session)
-  if (!session) {
-    redirect("/")
-  }
+  useEffect(() => {
+    console.log(session)
+    if (!session) {
+      redirect("/")
+    }
+  }, [])
 
   return (
     <div className="min-h-screen relative text-white">
