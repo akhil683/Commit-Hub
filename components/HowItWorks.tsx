@@ -1,18 +1,7 @@
-'use client'
+"use client"
 
-import axios from 'axios'
 import { motion } from 'framer-motion'
-import { Github, GitFork, GitCommit } from 'lucide-react'
-import { useSession } from 'next-auth/react'
-
-interface SessionData {
-  user: {
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
-  accessToken: string;
-}
+import { Github, GitFork, GitCommit, Webhook } from 'lucide-react'
 
 export default function HowItWorks() {
   const steps = [
@@ -24,7 +13,12 @@ export default function HowItWorks() {
     {
       icon: <GitFork className="h-16 w-16 text-pink-400" />,
       title: 'Create Tracking Repo',
-      description: 'We create a new "code-tracking" repository in your account.',
+      description: 'We create a new "code-tracking" private repository in your account.',
+    },
+    {
+      icon: <Webhook className="h-16 w-16 text-blue-400" />,
+      title: 'Set up Webhook',
+      description: 'Automatically sets up webhooks for all repositories in GitHub account.',
     },
     {
       icon: <GitCommit className="h-16 w-16 text-cyan-400" />,
@@ -32,20 +26,6 @@ export default function HowItWorks() {
       description: 'Your non-main branch commits are synced to the tracking repo.',
     },
   ]
-
-  const { data: session } = useSession()
-
-  // const createWebhookHandler = async () => {
-  //   if (!session) return;
-  //   try {
-  //     const response = await axios.post("/api/create-webhook", {
-  //       accessToken: (session as SessionData).accessToken,
-  //     })
-  //     console.log("webhook response", response)
-  //   } catch (error) {
-  //     console.log("Error creating webhook", error)
-  //   }
-  // }
 
   return (
     <section className="py-16 bg-black bg-opacity-30 mt-20 md:mt-32">

@@ -44,7 +44,7 @@ export default function Pricing() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
-              className={`bg-gradient-to-tr from-blue-900/30 via-indigo-900/20 to-purple-900/10 bg-opacity-50 p-12 rounded-lg shadow-lg backdrop-blur-sm border border-gray-700 flex flex-col ${plan.name === "Pro" ? "border-indigo-400" : ""}`}
+              className={`bg-gradient-to-tr from-blue-900/30 via-indigo-900/20 to-purple-900/10 bg-opacity-50 p-12 rounded-lg shadow-lg backdrop-blur-sm border border-gray-700 flex flex-col hover:bg-indigo-700/10 duration-300 ${plan.name === "Pro" ? "border-purple-600" : ""}`}
             >
               <h3 className="text-2xl font-semibold">{plan.name}</h3>
               <div className="text-4xl md:text-5xl text-center font-bold my-8 bg-gradient-to-b from-indigo-300 to-white text-transparent bg-clip-text">

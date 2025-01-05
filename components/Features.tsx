@@ -14,7 +14,7 @@ export default function Features() {
     {
       icon: <GitBranch className="h-16 w-16 text-pink-400" />,
       title: 'Branch Agnostic',
-      description: 'Capture commits from all branches, not just main because main commits are considered in contribution graph',
+      description: 'Capture commits from all branches, except main because main commits are considered in contribution graph',
     },
     {
       icon: <GitCommit className="h-16 w-16 text-cyan-400" />,
@@ -42,7 +42,7 @@ export default function Features() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
-              className="flex flex-col justify-center items-center bg-gray-900 bg-opacity-30 p-6 rounded-lg shadow-lg backdrop-blur-sm border border-gray-700 py-16"
+              className="flex flex-col justify-center items-center bg-gray-900 bg-opacity-30 p-6 rounded-lg shadow-lg backdrop-blur-sm border border-gray-700 py-16 hover:bg-indigo-700/20 duration-300"
             >
               <div className="mb-8">{feature.icon}</div>
               <h3 className="text-2xl text-center md:text-3xl font-semibold mb-4">{feature.title}</h3>
