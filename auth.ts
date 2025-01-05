@@ -58,7 +58,6 @@ export const authOptions =
 
       //redirect to /user-profile after sign-in
       async redirect({ url, baseUrl }) {
-        console.log("Redirecting to:", url, "Base URL:", baseUrl);
         if (url.startsWith(baseUrl)) {
           return url;
         }

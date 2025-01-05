@@ -70,7 +70,7 @@ export default function WaitListForm() {
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="h-12 md:w-72 bg-gray-900/50 border-gray-800 text-white placeholder:text-gray-500"
+                  className="h-12 md:w-72 bg-gray-900/50 border-2 border-gray-800 focus:border-gray-300 text-white placeholder:text-gray-500"
                   {...field}
                 />
               </FormControl>

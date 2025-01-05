@@ -19,7 +19,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl md:text-7xl font-bold text-center mb-6"
+          className="text-4xl md:text-7xl font-bold text-center mb-6"
         >
           Track Your Code, {" "}
           <span className="bg-gradient-to-b from-indigo-300 to-primary text-transparent bg-clip-text">
@@ -30,7 +30,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-xl text-center text-gray-300 mb-8"
+          className="text-lg md:text-xl text-center text-gray-300 mb-8"
         >
           Automatically sync your non-main branch commits to light up your GitHub contribution graph.
         </motion.p>

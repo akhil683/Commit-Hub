@@ -25,9 +25,9 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section className="py-16 relative mt-20 md:mt-32">
+    <section className="py-16 max-md:px-6 relative mt-20 md:mt-32">
       <SpaceBackground />
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/10 to-black opacity-50" />
+      <div className="max-w-7xl absolute inset-0 bg-gradient-to-b from-black via-purple-900/10 to-black opacity-50" />
       <div className="container mx-auto px-4 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
