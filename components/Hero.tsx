@@ -15,6 +15,11 @@ export default function Hero() {
     <section className="relative h-screen flex items-center">
       <SpaceBackground />
       <div className="container mx-auto px-4 relative z-10">
+        <div className='text-center mb-4 mx-auto'>
+          <p className='bg-gradient-to-b from-indigo-500 to-indigo-950 inline-block px-4 py-2 text-xs md:text-sm rounded-full'>
+            Coming Soon
+          </p>
+        </div>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
