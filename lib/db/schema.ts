@@ -1,12 +1,18 @@
-import { boolean, integer, pgTable, primaryKey, serial, text, timestamp, } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, primaryKey, serial, text, timestamp, varchar, } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from "next-auth/adapters"
+
+export const waitlist = pgTable("waitlist", {
+  id: serial('id').primaryKey(),
+  email: varchar("email", { length: 255 }).unique().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull()
+})
 
 export const usersTable = pgTable("user", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
-  email: text("email").unique(),
+  email: text("email").unique().notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   subscription: text("subscription"),
