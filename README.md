@@ -95,6 +95,7 @@ A web application that helps developers keep their GitHub contribution graph upd
    AUTH_GITHUB_ID=your_github_client_id
    AUTH_GITHUB_SECRET=your_github_client_secret
    NEXTAUTH_SECRET=your_nextauth_secret
+   WEBHOOK_URL=your_webhook_url
    GITHUB_PERSONAL_ACCESS_TOKEN=your_personal_access_token
    ENCRYPT_KEY=your_encryption_key
    ```
