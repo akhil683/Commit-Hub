@@ -9,3 +9,5 @@ export const WEBHOOK_URL = process.env.WEBHOOK_URL || ""
 
 // database
 export const DATABASE_URL = process.env.DATABASE_URL || ""
+
+export const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || ""
