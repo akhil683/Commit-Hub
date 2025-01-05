@@ -3,11 +3,14 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { SpaceBackground } from './SpaceBackground'
-import Link from 'next/link'
 import { signIn, useSession } from 'next-auth/react'
+import { Input } from './ui/input'
+import WaitListForm from './WaitlistForm'
 
 export default function Hero() {
   const { data: session } = useSession()
+
+
   return (
     <section className="relative h-screen flex items-center">
       <SpaceBackground />
@@ -16,7 +19,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl md:text-7xl font-bold text-center mb-6"
+          className="text-4xl md:text-7xl font-bold text-center mb-6"
         >
           Track Your Code, {" "}
           <span className="bg-gradient-to-b from-indigo-300 to-primary text-transparent bg-clip-text">
@@ -27,7 +30,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-xl text-center text-gray-300 mb-8"
+          className="text-lg md:text-xl text-center text-gray-300 mb-8"
         >
           Automatically sync your non-main branch commits to light up your GitHub contribution graph.
         </motion.p>
@@ -37,18 +40,19 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="flex justify-center"
         >
-          {session ? (
-
-            <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white">
-              <Link href={"/user-profile"}>
-                Dashboard
-              </Link>
-            </Button>
-          ) : (
-            <Button onClick={() => signIn("github", { callbackUrl: '/user-profile' })} size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white">
-              Get Started
-            </Button>
-          )}
+          <WaitListForm />
+          {/* {session ? ( */}
+          {/**/}
+          {/*   <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white"> */}
+          {/*     <Link href={"/user-profile"}> */}
+          {/*       Dashboard */}
+          {/*     </Link> */}
+          {/*   </Button> */}
+          {/* ) : ( */}
+          {/*   <Button onClick={() => signIn("github", { callbackUrl: '/user-profile' })} size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white"> */}
+          {/*     Get Started */}
+          {/*   </Button> */}
+          {/* )} */}
         </motion.div>
       </div>
     </section>
