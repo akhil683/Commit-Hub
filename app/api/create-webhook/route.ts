@@ -5,27 +5,47 @@
 // into the code-tracking repo. Without calling this route, 
 // webhooks won't be created, and commits won't be tracked.
 
-import { GITHUB_PERSONAL_ACCESS_TOKEN, WEBHOOK_URL } from "@/config/env";
+import { db } from "@/lib/db/db";
+import { WEBHOOK_URL } from "@/config/env";
+import { accountsTable } from "@/lib/db/schema";
 import { Octokit } from "@octokit/rest";
+import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
+import { decrypt } from "@/lib/utils";
 
 export async function POST(req: NextRequest) {
 
-  try {
-    // Retrieve the session to access the accessToken
-    const session = await req.json()
-    if (!session || !session.accessToken) {
-      return NextResponse.json({ error: "Access token is not available" }, { status: 401 });
-    }
+  // Retrieve the user to access the accessToken
+  const { user } = await req.json();
+  const { id: userId } = user
 
-    const webhookBaseURL = WEBHOOK_URL;
-    const accessToken = session.accessToken;
+  if (!userId) {
+    return NextResponse.json(
+      { message: 'Please login before creating repo!' },
+      { status: 400 }
+    );
+  }
+
+  //Fetch the account info of user
+  const account = await db
+    .select()
+    .from(accountsTable)
+    .where(eq(accountsTable.userId, userId))
+
+  // Ignore, if there is no account
+  if (!account) {
+    return NextResponse.json(
+      { message: 'Un-Authorized, account not found !' },
+      { status: 400 }
+    );
+  }
+
+  const decryptedToken = decrypt(account[0].private_access_token as string)
+
+  try {
     const results: Array<{ repo: string; status: string; hook_id?: number }> = [];
 
-    const octokit = new Octokit({
-      // auth: accessToken,
-      auth: GITHUB_PERSONAL_ACCESS_TOKEN
-    });
+    const octokit = new Octokit({ auth: decryptedToken });
 
     // Fetch authenticated user details
     const user = (await octokit.users.getAuthenticated()).data.login;
@@ -45,8 +65,8 @@ export async function POST(req: NextRequest) {
           repo: repo.name,
         });
 
-        const existingHook = hooks.find((hook) => hook.config.url === webhookBaseURL);
-        
+        const existingHook = hooks.find((hook) => hook.config.url === WEBHOOK_URL as string);
+
         if (existingHook) {
           console.log(`Webhook already exists for repo: ${repo.name}`);
           results.push({
@@ -62,7 +82,7 @@ export async function POST(req: NextRequest) {
           owner: user,
           repo: repo.name,
           config: {
-            url: webhookBaseURL,
+            url: WEBHOOK_URL,
             content_type: "json",
           },
           events: ["push"],

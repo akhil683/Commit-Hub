@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthConfig } from "next-auth"
+import NextAuth, { NextAuthConfig, type Session } from "next-auth"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import GitHub from "next-auth/providers/github"
 import { AUTH_GITHUB_ID, AUTH_GITHUB_SECRET, AUTH_SECRET } from "./config/env"
@@ -41,16 +41,17 @@ export const authOptions =
         // user: user object from userTable in db
 
         //Access the account of current user 
-        const account = await db
+        const userDB = await db
           .select()
-          .from(accountsTable)
-          .where(eq(accountsTable.userId, user.id))
+          .from(usersTable)
+          .where(eq(usersTable.id, user.id))
           .limit(1)
 
         //if multiple account for one user,
         //then access the access_token of first account
-        if (account.length > 0 && account[0].access_token) {
-          session.accessToken = account[0].access_token
+        if (userDB.length > 0 && userDB[0].id) {
+          session.user.id = userDB[0].id
+          session.user.image = userDB[0].image
         }
 
         return session

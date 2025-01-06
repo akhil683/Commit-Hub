@@ -21,7 +21,7 @@ export default async function UserProfile() {
           <div className="flex max-md:flex-col gap-8 md:gap-16">
             <div className='flex md:flex-col gap-8 max-md:items-center'>
               <Avatar className="md:h-48 md:w-48 sm:h-44 sm:w-44 h-20 w-20">
-                <AvatarImage src={session?.user?.image!} alt="User" />
+                <AvatarImage src={session?.user?.image as string} alt="User" />
                 <AvatarFallback>AP</AvatarFallback>
               </Avatar>
               <div className='md:mt-2 md:space-y-2'>

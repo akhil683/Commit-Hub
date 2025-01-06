@@ -34,6 +34,7 @@ export const accountsTable = pgTable(
     token_type: text("token_type"),
     scope: text("scope"),
     id_token: text("id_token"),
+    private_access_token: text("private_access_token"),
     session_state: text("session_state"),
   },
   (account) => [

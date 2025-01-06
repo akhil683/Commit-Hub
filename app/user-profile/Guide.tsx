@@ -1,12 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import axios from 'axios';
 import { ChevronRight, Github, Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react';
-import React, { useState } from 'react'
-import { SessionData } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -18,7 +15,6 @@ import {
 import GithubTokenForm from '@/components/form/GithubTokenForm';
 
 const Guide = () => {
-  const [githubToken, setGithubToken] = useState('')
   const { data: session } = useSession()
   const { toast } = useToast()
 
@@ -27,13 +23,13 @@ const Guide = () => {
       if (!session) {
         toast({
           title: "Un-Authorized !",
-          description: "Please login you account.",
+          description: "Please login to your account.",
           variant: "destructive"
         })
         return
       };
       await axios.post("/api/create-repo", {
-        accessToken: (session as SessionData).accessToken,
+        user: session.user,
       });
     },
     onSuccess: () => {
@@ -45,7 +41,7 @@ const Guide = () => {
     onError: () => {
       toast({
         title: "Un-expected Error !",
-        description: "Un-successfull, please try again ",
+        description: "An unexpected error occured",
         variant: "destructive"
       })
     }
@@ -63,7 +59,7 @@ const Guide = () => {
         return
       };
       await axios.post("/api/create-webhook", {
-        accessToken: (session as SessionData).accessToken,
+        userId: session.user,
       });
     },
     onSuccess: () => {
@@ -80,12 +76,6 @@ const Guide = () => {
       })
     }
   })
-
-  const handleSubmitToken = (e: React.FormEvent) => {
-    e.preventDefault()
-    // TODO: Implement token submission logic
-    console.log('Token submitted:', githubToken)
-  }
 
   return (
     <div>

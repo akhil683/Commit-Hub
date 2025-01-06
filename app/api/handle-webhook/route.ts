@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
 
   const event = await req.json();
   console.log(event)
-
   //Validate the event payload
   if (!event || !event.ref || !event.repository || !event.head_commit) {
     return NextResponse.json({ error: "Invalid event payload" }, { status: 400 });
