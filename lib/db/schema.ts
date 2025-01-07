@@ -16,7 +16,7 @@ export const usersTable = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   subscription: text("subscription"),
-  github_token: text("github_token")
+  total_commits: integer("total_commits").default(0)
 })
 
 export const accountsTable = pgTable(
@@ -34,6 +34,8 @@ export const accountsTable = pgTable(
     token_type: text("token_type"),
     scope: text("scope"),
     id_token: text("id_token"),
+    //Github Private Access Token
+    private_access_token: text("private_access_token"),
     session_state: text("session_state"),
   },
   (account) => [

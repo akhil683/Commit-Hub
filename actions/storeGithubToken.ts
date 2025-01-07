@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import { db } from '@/lib/db/db';
-import { usersTable } from "@/lib/db/schema"
+import { accountsTable, usersTable } from "@/lib/db/schema"
 import { eq } from 'drizzle-orm';
 import { ENCRYPTION_KEY } from '@/config/env';
 
@@ -30,9 +30,9 @@ export const storeGithubToken = async (formData: FormData, userId: string) => {
   // Save the encrypted token to the database
   try {
     await db
-      .update(usersTable)
-      .set({ github_token: encryptedToken })
-      .where(eq(usersTable.id, userId))
+      .update(accountsTable)
+      .set({ private_access_token: encryptedToken })
+      .where(eq(accountsTable.userId, userId))
 
     return { success: true, message: 'GitHub token stored successfully' };
   } catch (error) {

@@ -1,19 +1,45 @@
 import { NextResponse } from 'next/server';
 import { Octokit } from '@octokit/rest';
-import { GITHUB_PERSONAL_ACCESS_TOKEN } from '@/config/env';
+// import { GITHUB_PERSONAL_ACCESS_TOKEN } from '@/config/env';
+import { db } from '@/lib/db/db';
+import { eq } from 'drizzle-orm';
+import { accountsTable } from '@/lib/db/schema';
+import { decrypt } from '@/lib/utils';
 
 export async function POST(req: Request) {
-  const { accessToken } = await req.json();
-  console.log(accessToken)
+  console.log("create-repo running...")
+  const { user } = await req.json();
+  const { id: userId } = user
+
   try {
-    if (!accessToken) {
-      return NextResponse.json({ message: 'Access token is missing' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json(
+        { message: 'Please login before creating repo!' },
+        { status: 400 }
+      );
     }
+
+    const account = await db
+      .select()
+      .from(accountsTable)
+      .where(eq(accountsTable.userId, userId))
+
+    console.log(account)
+
+    if (!account) {
+      return NextResponse.json(
+        { message: 'Un-Authorized, account not found !' },
+        { status: 400 }
+      );
+    }
+
+    const decryptedToken = decrypt(account[0].private_access_token as string)
+    console.log(decryptedToken)
 
     // Create an instance of Octokit with the provided access token
     const octokit = new Octokit({
       // auth: accessToken,
-      auth: GITHUB_PERSONAL_ACCESS_TOKEN
+      auth: decryptedToken
     });
 
     // Fetch the authenticated user's info
@@ -29,7 +55,10 @@ export async function POST(req: Request) {
       .catch(() => null);
 
     if (existingRepo) {
-      return NextResponse.json({ message: 'Repository already exists' }, { status: 400 });
+      console.log('Repo already exists')
+      return NextResponse.json(
+        { message: 'Repository already exists' },
+        { status: 400 });
     }
 
     // Create code-tracking repository

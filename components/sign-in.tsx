@@ -14,13 +14,17 @@ export const SignIn = () => {
   const handleSignIn = async () => {
     setLoading(true)
     try {
-      await signIn("github", { callbackUrl: '/user-profile' })
+      await signIn("github", { callbackUrl: '/(protected)/user-profile' })
       toast({
         title: "Login Success !",
         description: "You are logged in successfully"
       })
     } catch (SignInError) {
       console.log("Error during signin: ", SignInError)
+      // toast({
+      //   title: "Error !",
+      //   description: "Failed to signin."
+      // })
     } finally {
       setLoading(false)
     }
