@@ -3,6 +3,7 @@ import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { auth } from '@/auth'
 import { DollarSign, GitCommit, Github, Star } from 'lucide-react'
+import { userInfo } from 'os'
 
 const Profile = async () => {
   const session = await auth()
@@ -34,7 +35,7 @@ const Profile = async () => {
           <div className="flex items-center justify-between">
             <GitCommit className="max-md:hidden h-8 w-8 text-indigo-400" />
             <div className="md:hidden text-gray-400 mt-2">Total Commits</div>
-            <span className="text-2xl md:text-4xl text-gray-200">1,234</span>
+            <span className="text-2xl md:text-4xl text-gray-200">{session?.user.total_commits}</span>
           </div>
           <div className="max-md:hidden text-gray-400 mt-2">Total Commits</div>
         </div>
