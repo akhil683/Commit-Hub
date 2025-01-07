@@ -59,7 +59,7 @@ const Guide = () => {
         return
       };
       await axios.post("/api/create-webhook", {
-        userId: session.user,
+        user: session.user,
       });
     },
     onSuccess: () => {

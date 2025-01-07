@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
 
   // Retrieve the user to access the accessToken
   const { user } = await req.json();
+  console.log(user)
   const { id: userId } = user
 
   if (!userId) {
