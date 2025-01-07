@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
 
 export default function CTA() {
   return (
@@ -13,15 +14,15 @@ export default function CTA() {
           transition={{ duration: 0.5 }}
           className="text-3xl font-bold mb-6"
         >
-          Ready to Boost Your GitHub Profile?
+          Want to contribute to this Project ?
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-xl mb-8"
+          className="text-lg md:text-xl mb-8"
         >
-          Start tracking all your coding activity and showcase your true contributions.
+          Your contribution can help make this app even better. Join us in building something amazing together !
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -29,7 +30,8 @@ export default function CTA() {
           transition={{ delay: 0.4, duration: 0.5 }}
         >
           <Button size="lg" className="bg-white text-indigo-900 hover:bg-gray-200">
-            Get Started Now
+            Contribute Now
+            <ArrowRight />
           </Button>
         </motion.div>
       </div>

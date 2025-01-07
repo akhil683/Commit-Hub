@@ -52,6 +52,7 @@ export const authOptions =
         if (userDB.length > 0 && userDB[0].id) {
           session.user.id = userDB[0].id
           session.user.image = userDB[0].image
+          session.user.total_commits = userDB[0].total_commits
         }
 
         return session

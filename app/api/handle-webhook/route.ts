@@ -1,5 +1,8 @@
 import { GITHUB_PERSONAL_ACCESS_TOKEN } from "@/config/env";
+import { db } from "@/lib/db/db";
+import { usersTable } from "@/lib/db/schema";
 import { Octokit } from "@octokit/rest";
+import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 interface FileDataType {
@@ -89,6 +92,11 @@ export async function POST(req: NextRequest) {
         content: Buffer.from(fileContent + "\n" + newCommitMessage).toString("base64"),
         sha: sha || undefined
       });
+
+      // await db
+      //   .update(usersTable)
+      // .set({ total_commits: })
+      //   .where(eq(usersTable.id, userId))
 
       return NextResponse.json({ message: "Webhook handled successfully" });
 

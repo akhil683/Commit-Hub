@@ -10,7 +10,7 @@ export default function Home() {
       <Hero />
       <Features />
       <HowItWorks />
-      <Pricing />
+      {/* <Pricing /> */}
       <CTA />
     </main>
   )
