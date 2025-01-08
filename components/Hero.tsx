@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion'
 import { SpaceBackground } from './SpaceBackground'
 import { useSession } from 'next-auth/react'
-import WaitListForm from './WaitlistForm'
+import WaitListForm from './form/WaitlistForm'
 
 export default function Hero() {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
 
 
   return (

@@ -2,8 +2,8 @@
 
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Input } from "./ui/input"
-import { Button } from "./ui/button"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -13,7 +13,7 @@ import {
   FormField,
   FormControl,
   FormMessage
-} from "./ui/form"
+} from "../ui/form"
 import { joinWaitlist } from "@/actions/waitlist"
 
 const schema = z.object({
