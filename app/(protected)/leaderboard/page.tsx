@@ -1,24 +1,22 @@
-'use client'
-
-import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { SpaceBackground } from '@/components/SpaceBackground'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import Image from 'next/image'
+import { db } from '@/lib/db/db'
+import { usersTable } from '@/lib/db/schema'
+import { desc } from 'drizzle-orm'
+import { auth } from '@/auth'
 
-const leaderboardData = [
-  { id: 1, name: 'Alice Johnson', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 1234 },
-  { id: 2, name: 'Bob Smith', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 987 },
-  { id: 3, name: 'Charlie Brown', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 876 },
-  { id: 4, name: 'Diana Prince', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 765 },
-  { id: 5, name: 'Ethan Hunt', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 654 },
-  { id: 6, name: 'Fiona Gallagher', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 543 },
-  { id: 7, name: 'George Costanza', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 432 },
-  { id: 8, name: 'Hermione Granger', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 321 },
-  { id: 9, name: 'Ian Malcolm', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 210 },
-  { id: 10, name: 'Julia Child', image_url: "https://avatars.githubusercontent.com/u/71344171?s=48&v=4", commits: 109 },
-]
 
-export default function Leaderboard() {
+export default async function Leaderboard() {
+
+  const session = await auth()
+
+  const leaderboardData = await db
+    .select()
+    .from(usersTable)
+    .orderBy(desc(usersTable.total_commits))
+    .limit(10)
+
   return (
     <div className="min-h-screen relative mt-16">
       <SpaceBackground />
@@ -35,19 +33,36 @@ export default function Leaderboard() {
             </TableRow>
           </TableHeader>
           <TableBody className='text-gray-300'>
+            <tr
+              className='bg-indigo-700/40 duration-200 rounded-3xl'
+            >
+              <TableCell className="font-medium text-2xl md:text-3xl">0</TableCell>
+              <TableCell className='flex gap-2 items-center'>
+                <Image
+                  src={session?.user.image as string}
+                  alt={session?.user.name as string}
+                  width={30}
+                  height={30}
+                  className='rounded-full'
+                />
+                {session?.user.name}
+              </TableCell>
+              <TableCell className="text-right">
+                <span className='text-right font-semibold bg-gray-700/60 px-4 py-2 rounded-xl'>
+                  {session?.user.total_commits}
+                </span>
+              </TableCell>
+            </tr>
             {leaderboardData?.map((user, index) => (
-              <motion.tr
+              <tr
                 key={user.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
                 className='hover:bg-gray-700/20 duration-200'
               >
                 <TableCell className="font-medium text-2xl md:text-3xl">{index + 1}</TableCell>
                 <TableCell className='flex gap-2 items-center'>
                   <Image
-                    src={user.image_url}
-                    alt={user.name}
+                    src={user.image as string}
+                    alt={user.name as string}
                     width={30}
                     height={30}
                     className='rounded-full'
@@ -56,10 +71,10 @@ export default function Leaderboard() {
                 </TableCell>
                 <TableCell className="text-right">
                   <span className='text-right font-semibold bg-gray-700/60 px-4 py-2 rounded-xl'>
-                    {user.commits.toLocaleString()}
+                    {user.total_commits}
                   </span>
                 </TableCell>
-              </motion.tr>
+              </tr>
             ))}
           </TableBody>
         </Table>
