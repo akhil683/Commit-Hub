@@ -1,14 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
 import { SpaceBackground } from './SpaceBackground'
-import { signIn, useSession } from 'next-auth/react'
-import { Input } from './ui/input'
-import WaitListForm from './WaitlistForm'
+import { useSession } from 'next-auth/react'
+import WaitListForm from './form/WaitlistForm'
 
 export default function Hero() {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
 
 
   return (
