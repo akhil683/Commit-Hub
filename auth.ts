@@ -53,6 +53,7 @@ export const authOptions =
           session.user.id = userDB[0].id
           session.user.image = userDB[0].image
           session.user.total_commits = userDB[0].total_commits
+          session.user.subscription = userDB[0].subscription
         }
 
         return session

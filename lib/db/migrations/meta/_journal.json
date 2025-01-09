@@ -43,6 +43,13 @@
       "when": 1736258474094,
       "tag": "0005_first_cargill",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1736448591772,
+      "tag": "0006_tan_beast",
+      "breakpoints": true
     }
   ]
 }

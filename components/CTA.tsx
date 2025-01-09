@@ -29,9 +29,11 @@ export default function CTA() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <Button size="lg" className="bg-white text-indigo-900 hover:bg-gray-200">
-            Contribute Now
-            <ArrowRight />
+          <Button asChild size="lg" className="bg-white text-indigo-900 hover:bg-gray-200">
+            <a href='https://github.com/akhil683/Commit-Hub'>
+              Contribute Now
+              <ArrowRight />
+            </a>
           </Button>
         </motion.div>
       </div>
