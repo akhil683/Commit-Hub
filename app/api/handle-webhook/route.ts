@@ -10,30 +10,31 @@ interface FileDataType {
   sha: string
 }
 
-
 export async function POST(req: NextRequest) {
   const action = req.headers.get("x-github-event")
-  console.log("action", action)
-  console.log(action)
 
   //ignore ping event  triggered by github to test webhook
   if (action === "ping") {
-    console.log("Received ping event. Ignoring")
     return NextResponse.json({ message: "Unsupported event" }, { status: 200 })
   }
   //Ignor events which are not push events
   if (action !== "push") {
-    console.log(`Received unsupported event: ${action}. Ignoring.`);
     return NextResponse.json({ message: "Unsupported event" }, { status: 200 });
   }
 
   const event = await req.json();
-  console.log("event", event)
-
 
   //Validate the event payload
-  if (!event || !event.ref || !event.repository || !event.head_commit) {
-    return NextResponse.json({ error: "Invalid event payload" }, { status: 400 });
+  if (
+    !event ||
+    !event.ref ||
+    !event.repository ||
+    !event.head_commit
+  ) {
+    return NextResponse.json(
+      { error: "Invalid event payload" },
+      { status: 400 }
+    );
   }
 
 
@@ -46,19 +47,9 @@ export async function POST(req: NextRequest) {
     const user = event?.repository?.owner?.login
     const newCommitMessage = `[${userRepoName}][${branchName}] -> ${commitMessage}`
 
-    console.log(
-      repoName,
-      userRepoName,
-      commitMessage,
-      branchName,
-      newCommitMessage,
-      user
-    )
-
     try {
       //get user email from the event.
       const userEmail = event.head_commit.author.email
-      console.log(userEmail)
 
       // Get User from db via email to get account
       const userObject = await db

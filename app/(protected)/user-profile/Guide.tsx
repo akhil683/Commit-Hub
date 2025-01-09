@@ -81,25 +81,29 @@ const Guide = () => {
   return (
     <div>
       {/* Subscribe banner */}
-      {session?.user?.total_commits as number > 2 && session?.user.subscription}
-      <div className='flex justify-between items-center my-8 bg-indigo-600 px-6 py-4 rounded-xl gap-4'>
-        <p className='text-xl'>
-          You've reached the maximum commit limit for your current plan. Subscribe now to continue using the service seamlessly!
-        </p>
-        <Button
-          type="submit"
-          className="h-12 px-8 bg-white hover:bg-gray-300 text-black font-medium"
-          asChild
-        >
-          <Link href={"/"}>
-            Subscribe
-          </Link>
-        </Button>
-      </div>
-      <div className='h-[1px] bg-gray-700 my-8' />
+      {session?.user?.total_commits as number > 2 && session?.user.subscription && (
+        <>
+          <div className='flex max-md:flex-col max-md:text-center justify-between items-center my-8 bg-indigo-600 px-6 py-4 rounded-xl gap-4'>
+            <p className='md:text-xl text-lg text-center'>
+              You've reached the maximum commit limit for your current plan. Subscribe now to continue using the service seamlessly!
+            </p>
+            <Button
+              type="submit"
+              className="h-12 px-8 bg-white hover:bg-gray-300 text-black font-medium"
+              asChild
+            >
+              <Link href={"/"}>
+                Subscribe
+              </Link>
+            </Button>
+          </div>
+          <div className='h-[1px] bg-gray-700 my-8' />
+        </>
+      )}
 
-      <h2 className='text-2xl md:text-3xl font-semibold'>Step by Step guide to Automate Code Tracking</h2>
-
+      <h2 className='text-2xl md:text-3xl font-semibold'>
+        Step by Step guide to Automate Code Tracking
+      </h2>
       <div className='h-[1px] bg-gray-700 my-8' />
 
       {/* Step 1: Github Access Token */}
@@ -140,6 +144,7 @@ const Guide = () => {
         <GithubTokenForm />
       </div>
 
+      {/* Step 2: Create Private Repository: "codetracking" */}
       <div className='h-[1px] bg-gray-700 my-8' />
       <div>
         <h2 className="text-xl md:text-2xl font-semibold mb-4">2. Create Repository</h2>
@@ -154,13 +159,20 @@ const Guide = () => {
           Create Repo
         </Button>
       </div>
+
+      {/* Step 3: Create Webhook to all repositories */}
       <div className='h-[1px] bg-gray-700 my-8' />
       <div>
         <h2 className="text-xl md:text-2xl font-semibold mb-4">3. Create Webhook</h2>
         <p className="md:text-lg text-sm text-gray-300 mb-4">
           Add webhooks to all your repositories. These webhooks will notify this app whenever you make a commit on any branch. The app will automatically mirror your commit messages to the code-tracking repository.
         </p>
-        <Button disabled={createWebhookMutation.isPending} onClick={() => createWebhookMutation.mutate()} variant="outline" className="max-sm:w-full text-black">
+        <Button
+          disabled={createWebhookMutation.isPending}
+          onClick={() => createWebhookMutation.mutate()}
+          variant="outline"
+          className="max-sm:w-full text-black"
+        >
           {createWebhookMutation.isPending
             ? <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             : <Github className="mr-2 h-4 w-4" />
