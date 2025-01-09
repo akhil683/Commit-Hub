@@ -13,6 +13,7 @@ import {
   AccordionTrigger
 } from '@radix-ui/react-accordion';
 import GithubTokenForm from '@/components/form/GithubTokenForm';
+import Link from 'next/link';
 
 const Guide = () => {
   const { data: session } = useSession()
@@ -79,7 +80,26 @@ const Guide = () => {
 
   return (
     <div>
+      {/* Subscribe banner */}
+      {session?.user?.total_commits as number > 2 && session?.user.subscription}
+      <div className='flex justify-between items-center my-8 bg-indigo-600 px-6 py-4 rounded-xl gap-4'>
+        <p className='text-xl'>
+          You've reached the maximum commit limit for your current plan. Subscribe now to continue using the service seamlessly!
+        </p>
+        <Button
+          type="submit"
+          className="h-12 px-8 bg-white hover:bg-gray-300 text-black font-medium"
+          asChild
+        >
+          <Link href={"/"}>
+            Subscribe
+          </Link>
+        </Button>
+      </div>
+      <div className='h-[1px] bg-gray-700 my-8' />
+
       <h2 className='text-2xl md:text-3xl font-semibold'>Step by Step guide to Automate Code Tracking</h2>
+
       <div className='h-[1px] bg-gray-700 my-8' />
 
       {/* Step 1: Github Access Token */}

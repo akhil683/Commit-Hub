@@ -15,7 +15,7 @@ export const usersTable = pgTable("user", {
   email: text("email").unique().notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
-  subscription: text("subscription"),
+  subscription: text("subscription").default("none"),
   total_commits: integer("total_commits").default(0)
 })
 
