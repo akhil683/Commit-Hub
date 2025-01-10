@@ -1,11 +1,17 @@
 
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { auth } from '@/auth'
-import { DollarSign, GitCommit, Github, Star } from 'lucide-react'
+import { GitCommit, Github, Star } from 'lucide-react'
+import { getUserData } from '@/actions/getUserData'
+import { UserType } from '@/types'
 
 const Profile = async () => {
   const session = await auth()
+
+  const res = await getUserData()
+  const user = res as UserType
+
 
   return (
     <>
@@ -27,44 +33,61 @@ const Profile = async () => {
         </div>
       </div>
 
-      <span className='md:hidden text-gray-300 text-sm'>Acting Productive with Neovim, but I'm not</span>
+      <span className='md:hidden text-gray-300 text-sm'>
+        {user.bio}
+      </span>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 w-full">
-        <div className="bg-gradient-to-tr from-blue-900/30 via-indigo-900/20 to-purple-900/20 bg-opacity-50 p-4 md:p-8 rounded-2xl border border-gray-700">
-          <div className="flex items-center justify-between">
-            <GitCommit className="max-md:hidden h-8 w-8 text-indigo-400" />
-            <div className="md:hidden text-gray-400 mt-2">Total Commits</div>
-            <span className="text-2xl md:text-4xl text-gray-200">{session?.user.total_commits}</span>
-          </div>
-          <div className="max-md:hidden text-gray-400 mt-2">Total Commits</div>
-        </div>
-        <div className="bg-gradient-to-tr from-blue-900/30 via-indigo-900/20 to-purple-900/20 bg-opacity-50 p-4 md:p-8 rounded-2xl border border-gray-700">
-          <div className="flex items-center justify-between">
-            <Github className="max-md:hidden h-8 w-8 text-indigo-400" />
-            <div className="md:hidden text-gray-400 mt-2">Total Repos</div>
-            <span className="text-2xl md:text-4xl">42</span>
-          </div>
-          <div className="max-md:hidden text-gray-400 mt-2">Total Repos</div>
-        </div>
-        <div className="bg-gradient-to-tr from-blue-900/20 via-indigo-900/20 to-purple-900/20 bg-opacity-50 p-4 md:p-8 rounded-2xl border border-gray-700">
-          <div className="flex items-center justify-between">
-            <Star className="max-md:hidden h-8 w-8 text-indigo-400" />
-            <div className="md:hidden text-gray-400 mt-2">Total Stars</div>
-            <span className="text-2xl md:text-4xl text-gray-200">567</span>
-          </div>
-          <div className="max-md:hidden text-gray-400 mt-2">Total Stars</div>
-        </div>
-        <div className="bg-gradient-to-tr from-blue-900/20 via-indigo-900/20 to-purple-900/20 bg-opacity-50 p-4 md:p-8 rounded-2xl border border-gray-700">
-          <div className="flex items-center justify-between">
-            <DollarSign className="max-md:hidden h-8 w-8 text-indigo-400" />
-            <div className="md:hidden text-gray-400 mt-2">Subscription</div>
-            <span className="text-2xl md:text-4xl text-gray-200">Pro</span>
-          </div>
-          <div className="max-md:hidden text-gray-400 mt-2">Subscription</div>
-        </div>
+
+        <DataSection
+          title="Total Commits"
+          value={session?.user.total_commits!}
+        >
+          <GitCommit className="max-md:hidden h-8 w-8 text-indigo-400" />
+        </DataSection>
+
+        <DataSection
+          title="Total Repos"
+          value={user.public_repos + user.total_private_repos}
+        >
+          <Github className="max-md:hidden h-8 w-8 text-indigo-400" />
+        </DataSection>
+
+        <DataSection
+          title="Total Followers"
+          value={user.followers}
+        >
+          <Star className="max-md:hidden h-8 w-8 text-indigo-400" />
+        </DataSection>
+
+        <DataSection
+          title="Subscription"
+          value={session?.user.subscription || "free"}
+        >
+          <Star className="max-md:hidden h-8 w-8 text-indigo-400" />
+        </DataSection>
       </div>
     </>
   )
 }
 
 export default Profile
+
+export const DataSection = ({ children, value, title }: { children: ReactNode, title: string, value: string | number | null }) => {
+  return (
+    <div className="bg-gradient-to-tr from-blue-900/20 via-indigo-900/20 to-purple-900/20 bg-opacity-50 p-4 md:p-8 rounded-2xl border border-gray-700" >
+      <div className="flex items-center justify-between">
+        {children}
+        <div className="md:hidden text-gray-400 mt-2">
+          {title}
+        </div>
+        <span className="text-2xl md:text-4xl text-gray-200">
+          {value}
+        </span>
+      </div>
+      <div className="max-md:hidden text-gray-400 mt-2">
+        {title}
+      </div>
+    </div >
+  )
+}

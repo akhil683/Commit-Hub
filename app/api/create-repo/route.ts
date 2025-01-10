@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { Octokit } from '@octokit/rest';
-// import { GITHUB_PERSONAL_ACCESS_TOKEN } from '@/config/env';
 import { db } from '@/lib/db/db';
 import { eq } from 'drizzle-orm';
 import { accountsTable } from '@/lib/db/schema';
 import { decrypt } from '@/lib/utils';
 
 export async function POST(req: Request) {
-  console.log("create-repo running...")
   const { user } = await req.json();
   const { id: userId } = user
 
@@ -24,8 +22,6 @@ export async function POST(req: Request) {
       .from(accountsTable)
       .where(eq(accountsTable.userId, userId))
 
-    console.log(account)
-
     if (!account) {
       return NextResponse.json(
         { message: 'Un-Authorized, account not found !' },
@@ -34,16 +30,18 @@ export async function POST(req: Request) {
     }
 
     const decryptedToken = decrypt(account[0].private_access_token as string)
-    console.log(decryptedToken)
 
     // Create an instance of Octokit with the provided access token
     const octokit = new Octokit({
-      // auth: accessToken,
       auth: decryptedToken
     });
 
     // Fetch the authenticated user's info
     const user = await octokit.users.getAuthenticated();
+    console.log("user info", user)
+    console.log("bio", user.data.bio)
+    console.log("username", user.data.login)
+    console.log("total stars", user.data.public_repos)
 
     // check whether the repository already exists or not
     const repoName = 'codetracking';
@@ -72,7 +70,6 @@ export async function POST(req: Request) {
       homepage: "https://auto-commit-hub.vercel.app",
       private: true,
     });
-    console.log(createRepoResponse.data)
 
     return NextResponse.json({ data: createRepoResponse.data }, { status: 200 });
   } catch (error: any) {
