@@ -12,7 +12,6 @@ export default async function UserProfile() {
     redirect("/")
   }
 
-
   return (
     <div className="min-h-screen relative text-white">
       <SpaceBackground />
@@ -20,7 +19,7 @@ export default async function UserProfile() {
         <div className="flex max-md:flex-col gap-8 md:gap-16">
           <Suspense
             fallback={
-              <h1 className='text-6xl'>Loading...</h1>
+              <div className='w-full h-64 rounded-2xl bg-gray-800/30 animate-pulse' />
             }
           >
             <Profile />

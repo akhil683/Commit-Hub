@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import { db } from '@/lib/db/db';
-import { accountsTable, usersTable } from "@/lib/db/schema"
+import { accountsTable } from "@/lib/db/schema"
 import { eq } from 'drizzle-orm';
 import { ENCRYPTION_KEY } from '@/config/env';
 
@@ -25,7 +25,6 @@ export const storeGithubToken = async (formData: FormData, userId: string) => {
 
   // Encrypt the GitHub token to security reasons
   const encryptedToken = encrypt(githubToken);
-  console.log(encryptedToken)
 
   // Save the encrypted token to the database
   try {
