@@ -12,7 +12,6 @@ export default async function UserProfile() {
     redirect("/")
   }
 
-
   return (
     <div className="min-h-screen relative text-white">
       <SpaceBackground />

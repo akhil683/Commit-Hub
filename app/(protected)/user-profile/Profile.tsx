@@ -7,8 +7,8 @@ import { getUserData } from '@/actions/getUserData'
 import { UserType } from '@/types'
 
 const Profile = async () => {
-  const session = await auth()
 
+  const session = await auth()
   const res = await getUserData()
   const user = res as UserType
 

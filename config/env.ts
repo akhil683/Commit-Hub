@@ -10,4 +10,8 @@ export const WEBHOOK_URL = process.env.WEBHOOK_URL || ""
 // database
 export const DATABASE_URL = process.env.DATABASE_URL || ""
 
+// Stripe
+export const NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
+export const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || ""
+
 export const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || ""

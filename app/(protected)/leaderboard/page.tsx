@@ -5,11 +5,16 @@ import { db } from '@/lib/db/db'
 import { usersTable } from '@/lib/db/schema'
 import { desc } from 'drizzle-orm'
 import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
 
 
 export default async function Leaderboard() {
 
   const session = await auth()
+
+  if (!session?.user) {
+    redirect("/")
+  }
 
   const leaderboardData = await db
     .select()
