@@ -53,7 +53,10 @@ export async function POST(req: NextRequest) {
     console.log("Authenticated user:", user);
 
     // Fetch all user repositories
-    const { data: repos } = await octokit.repos.listForAuthenticatedUser();
+    const { data: repos } = await octokit.repos.listForAuthenticatedUser({
+      visibility: "all",
+      affiliation: "owner"
+    });
     console.log("User repositories fetched:", repos.length);
 
     for (const repo of repos) {
