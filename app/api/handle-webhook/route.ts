@@ -11,6 +11,7 @@ interface FileDataType {
 }
 
 export async function POST(req: NextRequest) {
+  console.log("heello")
   const action = req.headers.get("x-github-event")
 
   //ignore ping event  triggered by github to test webhook

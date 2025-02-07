@@ -10,7 +10,8 @@ const Profile = async () => {
 
   const session = await auth()
   const res = await getUserData()
-  const user = res as UserType
+  const user = res as UserType | null
+  console.log(session)
 
 
   return (
@@ -34,28 +35,28 @@ const Profile = async () => {
       </div>
 
       <span className='md:hidden text-gray-300 text-sm'>
-        {user.bio}
+        {user?.bio}
       </span>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 w-full">
 
         <DataSection
           title="Total Commits"
-          value={session?.user.total_commits!}
+          value={session?.user.total_commits || 0}
         >
           <GitCommit className="max-md:hidden h-8 w-8 text-indigo-400" />
         </DataSection>
 
         <DataSection
           title="Total Repos"
-          value={user.public_repos + user.total_private_repos}
+          value={(user?.public_repos! + user?.total_private_repos!) || 0}
         >
           <Github className="max-md:hidden h-8 w-8 text-indigo-400" />
         </DataSection>
 
         <DataSection
           title="Total Followers"
-          value={user.followers}
+          value={user?.followers || 0}
         >
           <Star className="max-md:hidden h-8 w-8 text-indigo-400" />
         </DataSection>
