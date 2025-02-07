@@ -22,7 +22,6 @@ export const storeGithubToken = async (formData: FormData, userId: string) => {
   if (!githubToken) {
     return { success: false, error: 'GitHub token is required' };
   }
-
   // Encrypt the GitHub token to security reasons
   const encryptedToken = encrypt(githubToken);
 

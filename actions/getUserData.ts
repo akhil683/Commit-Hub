@@ -33,6 +33,9 @@ export const getUserData = async () => {
   });
   const userData = await octokit.users.getAuthenticated();
   const user = userData.data
-
-  return user as UserType
+  if (user) {
+    return user as UserType
+  } else {
+    return null
+  }
 }
