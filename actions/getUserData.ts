@@ -25,17 +25,18 @@ export const getUserData = async () => {
       { status: 400 }
     );
   }
-  const decryptedToken = decrypt(account[0].private_access_token as string)
+  if (account[0].private_access_token) {
+    const decryptedToken = decrypt(account[0].private_access_token as string)
 
-  // Create an instance of Octokit with the provided access token
-  const octokit = new Octokit({
-    auth: decryptedToken
-  });
-  const userData = await octokit.users.getAuthenticated();
-  const user = userData.data
-  if (user) {
-    return user as UserType
-  } else {
-    return null
+    // Create an instance of Octokit with the provided access token
+    const octokit = new Octokit({
+      auth: decryptedToken
+    });
+    const userData = await octokit.users.getAuthenticated();
+    const user = userData.data
+    if (user) {
+      return user as UserType
+    }
   }
+  return null
 }
