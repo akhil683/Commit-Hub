@@ -74,11 +74,13 @@ const Profile = async () => {
           {user?.bio}
         </p>
       </div>
-      <div className='md:p-4 p-3 max-md:text-xs rounded-lg border border-orange-500 bg-orange-700/20'>
-        <p>
-          Submit you Github Access Token to see profile stats
-        </p>
-      </div>
+      {!user && (
+        <div className='md:p-4 p-3 max-md:text-xs rounded-lg border border-orange-500 bg-orange-700/20'>
+          <p>
+            Submit you Github Access Token to see profile stats
+          </p>
+        </div>
+      )}
     </>
   )
 }
