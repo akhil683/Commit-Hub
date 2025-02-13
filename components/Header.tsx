@@ -3,8 +3,12 @@
 import { motion } from 'framer-motion'
 import { SignIn } from './sign-in'
 import Link from 'next/link'
+import { Kanban, LayoutDashboard } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 export default function Header() {
+  const { data: session } = useSession()
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -50 }}
@@ -23,13 +27,31 @@ export default function Header() {
             Commit Hub
           </motion.div>
         </Link>
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          <SignIn />
-        </motion.div>
+        <div className='flex justify-center items-center gap-4'>
+          {session && (
+            <>
+              <Link href={"/user-profile"} className=' text-white text-sm'>
+                <LayoutDashboard className='w-4 h-4' />
+                <p className='max-md:hidden'>
+                  Dashboard
+                </p>
+              </Link>
+              <Link href={"/leaderboard"} className=' text-white text-sm'>
+                <Kanban className='rotate-180 w-4 h-4' />
+                <p className='max-md:hidden'>
+                  Leaderboard
+                </p>
+              </Link>
+            </>
+          )}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <SignIn />
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   )
