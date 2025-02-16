@@ -31,13 +31,13 @@ export default function Header() {
           {session && (
             <>
               <Link href={"/user-profile"} className=' text-white text-sm'>
-                <LayoutDashboard className='w-4 h-4' />
+                <LayoutDashboard className='md:hidden kw-4 h-4' />
                 <p className='max-md:hidden'>
                   Dashboard
                 </p>
               </Link>
               <Link href={"/leaderboard"} className=' text-white text-sm'>
-                <Kanban className='rotate-180 w-4 h-4' />
+                <Kanban className='rotate-180 md:hidden w-4 h-4' />
                 <p className='max-md:hidden'>
                   Leaderboard
                 </p>
