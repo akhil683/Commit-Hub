@@ -10,6 +10,7 @@ interface FileDataType {
   sha: string;
 }
 
+//TODO: Handle free quota
 export async function POST(req: NextRequest) {
   const action = req.headers.get("x-github-event");
 
