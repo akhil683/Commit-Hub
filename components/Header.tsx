@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { SignIn } from './sign-in'
-import Link from 'next/link'
-import { Kanban, LayoutDashboard } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { motion } from "framer-motion";
+import { SignIn } from "./sign-in";
+import Link from "next/link";
+import { Kanban, LayoutDashboard } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
     <motion.div
@@ -27,22 +27,22 @@ export default function Header() {
             Commit Hub
           </motion.div>
         </Link>
-        <div className='flex justify-center items-center gap-4'>
+        <div className="flex justify-center items-center gap-8">
           {session && (
-            <>
-              <Link href={"/user-profile"} className=' text-white text-sm'>
-                <LayoutDashboard className='md:hidden kw-4 h-4' />
-                <p className='max-md:hidden'>
-                  Dashboard
-                </p>
+            <div className="max-md:hidden flex gap-6 items-center">
+              <Link
+                href={"/user-profile"}
+                className="text-gray-300 hover:text-gray-100 border-b-2 border-transparent duration-200 hover:border-gray-300"
+              >
+                Dashboard
               </Link>
-              <Link href={"/leaderboard"} className=' text-white text-sm'>
-                <Kanban className='rotate-180 md:hidden w-4 h-4' />
-                <p className='max-md:hidden'>
-                  Leaderboard
-                </p>
+              <Link
+                href={"/leaderboard"}
+                className="text-gray-300 hover:text-gray-100 border-b-2 border-transparent duration-200 hover:border-gray-300"
+              >
+                Leaderboard
               </Link>
-            </>
+            </div>
           )}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -54,6 +54,5 @@ export default function Header() {
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
-
