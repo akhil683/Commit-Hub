@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { SpaceBackground } from "./SpaceBackground";
-import { toast } from "@/hooks/use-toast";
+import { SpaceBackground } from "@/components/SpaceBackground";
 
 const plans = [
   {
@@ -34,19 +33,12 @@ const plans = [
   },
 ];
 
-export default function Pricing() {
-  const handleClick = () => {
-    toast({
-      title: "Un-Authorized !",
-      description: "Please login before upgrading plan.",
-      variant: "destructive",
-    });
-  };
+export default function SubscriptionPage() {
   return (
-    <section className="py-16 max-md:px-6 relative mt-20 md:mt-32">
+    <section className="py-16 max-md:px-6 relative mt-20">
       <SpaceBackground />
       <div className="max-w-7xl absolute inset-0 bg-gradient-to-b from-black via-purple-900/10 to-black opacity-50" />
-      <div className="container flex flex-col justify-center items-center mx-auto px-4 relative z-10">
+      <div className="container flex flex-col justify-center items-center text-white mx-auto px-4 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,7 +47,7 @@ export default function Pricing() {
         >
           Choose Your Plan
         </motion.h2>
-        <div className="max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {plans.map((plan, index) => (
             <motion.div
               key={index}
@@ -78,17 +70,11 @@ export default function Pricing() {
                 ))}
               </ul>
               {plan.name === "Pro" ? (
-                <button
-                  onClick={handleClick}
-                  className="py-3 w-full bg-gradient-to-tr from-violet-700 via-indigo-700 to-purple-700 rounded-xl text-white md:text-lg font-semibold hover:bg-blue-600 duration-500"
-                >
+                <button className="py-3 w-full bg-gradient-to-tr from-violet-700 via-indigo-700 to-purple-700 rounded-xl text-white md:text-lg font-semibold hover:bg-blue-600 duration-500">
                   Choose {plan.name}
                 </button>
               ) : (
-                <button
-                  onClick={handleClick}
-                  className="py-3 w-full bg-blue-700 rounded-xl text-white md:text-lg font-semibold hover:bg-blue-900 duration-300"
-                >
+                <button className="py-3 w-full bg-blue-700 rounded-xl text-white md:text-lg font-semibold hover:bg-blue-900 duration-300">
                   Choose {plan.name}
                 </button>
               )}

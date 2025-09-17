@@ -37,6 +37,12 @@ export default function Header() {
                 Dashboard
               </Link>
               <Link
+                href={"/subscription"}
+                className="text-gray-300 hover:text-gray-100 border-b-2 border-transparent duration-200 hover:border-gray-300"
+              >
+                Subscription
+              </Link>
+              <Link
                 href={"/leaderboard"}
                 className="text-gray-300 hover:text-gray-100 border-b-2 border-transparent duration-200 hover:border-gray-300"
               >
