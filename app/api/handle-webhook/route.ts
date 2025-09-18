@@ -45,6 +45,16 @@ export async function POST(req: NextRequest) {
           .from(usersTable)
           .where(eq(usersTable.email, userEmail));
 
+        if (
+          userObject[0] &&
+          userObject[0]?.total_commits! > 10 &&
+          userObject[0]?.subscription! !== "Pro"
+        ) {
+          return NextResponse.json(
+            { error: "Upgrade to the premium plan to continue the service." },
+            { status: 400 },
+          );
+        }
         if (!userObject[0]) {
           return NextResponse.json(
             { error: "User not found in DB" },
